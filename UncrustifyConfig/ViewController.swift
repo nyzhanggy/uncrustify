@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import Highlightr
+
 
 class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSource,NSSearchFieldDelegate {
 
@@ -140,9 +140,13 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
     }
     
     private  func codeHighlightr(codeContent: String) -> NSAttributedString? {
-        let highlightr = Highlightr()
-        highlightr?.setTheme(to: "xcode")
-        return highlightr?.highlight(codeContent, as: nil, fastRender: true)
+//        return NSAttributedString(string: codeContent)
+        guard let highlightr = Highlightr() else {
+            return nil
+            
+        }
+//        highlightr?.setTheme(to: "xcode")
+        return highlightr.highlight(codeContent, as: nil, fastRender: true)
     }
     
     

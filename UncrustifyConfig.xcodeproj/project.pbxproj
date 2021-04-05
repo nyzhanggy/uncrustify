@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1224C74F2618A8DE00D1122B /* CodeAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1224C7492618A8DE00D1122B /* CodeAttributedString.swift */; };
+		1224C7502618A8DE00D1122B /* Highlightr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1224C74A2618A8DE00D1122B /* Highlightr.swift */; };
+		1224C7522618A8DE00D1122B /* HTMLUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1224C74C2618A8DE00D1122B /* HTMLUtils.swift */; };
+		1224C7532618A8DE00D1122B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1224C74D2618A8DE00D1122B /* Theme.swift */; };
+		1224C7542618A8DE00D1122B /* Shims.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1224C74E2618A8DE00D1122B /* Shims.swift */; };
+		1224C7592618A8F600D1122B /* highlight.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 1224C7582618A8F600D1122B /* highlight.min.js */; };
+		1224C75C2618A90200D1122B /* xcode.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 1224C75B2618A90200D1122B /* xcode.min.css */; };
+		12A0A2E2261B49FF00104445 /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12A0A2E1261B49FF00104445 /* XcodeKit.framework */; };
+		12A0A2E3261B49FF00104445 /* XcodeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 12A0A2E1261B49FF00104445 /* XcodeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		15159A5421943CC3001B855A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15159A5321943CC3001B855A /* AppDelegate.swift */; };
 		15159A5621943CC3001B855A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15159A5521943CC3001B855A /* ViewController.swift */; };
 		15159A5821943CC3001B855A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15159A5721943CC3001B855A /* Assets.xcassets */; };
@@ -22,8 +31,6 @@
 		157397A921DCA68B00A55279 /* uncrustify in Resources */ = {isa = PBXBuildFile; fileRef = 15377C64219D64F700655DF4 /* uncrustify */; };
 		15D5CCDC21A2ACD100AECCF5 /* CodeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D5CCDB21A2ACD100AECCF5 /* CodeFormatter.swift */; };
 		15D5CCE221A3E4C700AECCF5 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D5CCE121A3E4C700AECCF5 /* MainWindowController.swift */; };
-		15D5CD2021A53D2E00AECCF5 /* Highlightr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15D5CD1E21A53D2900AECCF5 /* Highlightr.framework */; };
-		15D5CD2121A53D2E00AECCF5 /* Highlightr.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 15D5CD1E21A53D2900AECCF5 /* Highlightr.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +44,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		12A0A2E4261B49FF00104445 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				12A0A2E3261B49FF00104445 /* XcodeKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1573979321DC84F300A55279 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -54,7 +72,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				15D5CD2121A53D2E00AECCF5 /* Highlightr.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,6 +79,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1224C7492618A8DE00D1122B /* CodeAttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeAttributedString.swift; sourceTree = "<group>"; };
+		1224C74A2618A8DE00D1122B /* Highlightr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Highlightr.swift; sourceTree = "<group>"; };
+		1224C74C2618A8DE00D1122B /* HTMLUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLUtils.swift; sourceTree = "<group>"; };
+		1224C74D2618A8DE00D1122B /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		1224C74E2618A8DE00D1122B /* Shims.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shims.swift; sourceTree = "<group>"; };
+		1224C7582618A8F600D1122B /* highlight.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = highlight.min.js; sourceTree = "<group>"; };
+		1224C75B2618A90200D1122B /* xcode.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = xcode.min.css; sourceTree = "<group>"; };
+		12A0A2E1261B49FF00104445 /* XcodeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeKit.framework; path = Library/Frameworks/XcodeKit.framework; sourceTree = DEVELOPER_DIR; };
 		15159A5021943CC3001B855A /* UncrustifyConfig.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UncrustifyConfig.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15159A5321943CC3001B855A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15159A5521943CC3001B855A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -80,7 +105,6 @@
 		157397A121DC857600A55279 /* CodeFormatter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CodeFormatter.entitlements; sourceTree = "<group>"; };
 		15D5CCDB21A2ACD100AECCF5 /* CodeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeFormatter.swift; sourceTree = "<group>"; };
 		15D5CCE121A3E4C700AECCF5 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
-		15D5CD1E21A53D2900AECCF5 /* Highlightr.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Highlightr.framework; path = Carthage/Build/Mac/Highlightr.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +112,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15D5CD2021A53D2E00AECCF5 /* Highlightr.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,12 +120,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				1573979A21DC857600A55279 /* Cocoa.framework in Frameworks */,
+				12A0A2E2261B49FF00104445 /* XcodeKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1224C7482618A8DE00D1122B /* Highlightr */ = {
+			isa = PBXGroup;
+			children = (
+				1224C75B2618A90200D1122B /* xcode.min.css */,
+				1224C7582618A8F600D1122B /* highlight.min.js */,
+				1224C7492618A8DE00D1122B /* CodeAttributedString.swift */,
+				1224C74A2618A8DE00D1122B /* Highlightr.swift */,
+				1224C74C2618A8DE00D1122B /* HTMLUtils.swift */,
+				1224C74D2618A8DE00D1122B /* Theme.swift */,
+				1224C74E2618A8DE00D1122B /* Shims.swift */,
+			);
+			path = Highlightr;
+			sourceTree = "<group>";
+		};
 		15159A4721943CC3001B855A = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +163,7 @@
 		15159A5221943CC3001B855A /* UncrustifyConfig */ = {
 			isa = PBXGroup;
 			children = (
+				1224C7482618A8DE00D1122B /* Highlightr */,
 				15377C64219D64F700655DF4 /* uncrustify */,
 				15159A5321943CC3001B855A /* AppDelegate.swift */,
 				15159A5521943CC3001B855A /* ViewController.swift */,
@@ -154,7 +193,7 @@
 		15D5CCD021A24E8D00AECCF5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				15D5CD1E21A53D2900AECCF5 /* Highlightr.framework */,
+				12A0A2E1261B49FF00104445 /* XcodeKit.framework */,
 				1573979921DC857600A55279 /* Cocoa.framework */,
 			);
 			name = Frameworks;
@@ -190,6 +229,7 @@
 				1573979421DC857600A55279 /* Sources */,
 				1573979521DC857600A55279 /* Frameworks */,
 				1573979621DC857600A55279 /* Resources */,
+				12A0A2E4261B49FF00104445 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -258,6 +298,8 @@
 				15159A5821943CC3001B855A /* Assets.xcassets in Resources */,
 				15159A5B21943CC3001B855A /* Main.storyboard in Resources */,
 				15377C65219D64F700655DF4 /* uncrustify in Resources */,
+				1224C75C2618A90200D1122B /* xcode.min.css in Resources */,
+				1224C7592618A8F600D1122B /* highlight.min.js in Resources */,
 				15159A6421943CD2001B855A /* default.config in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -277,10 +319,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1224C7532618A8DE00D1122B /* Theme.swift in Sources */,
+				1224C7522618A8DE00D1122B /* HTMLUtils.swift in Sources */,
 				15D5CCDC21A2ACD100AECCF5 /* CodeFormatter.swift in Sources */,
+				1224C7502618A8DE00D1122B /* Highlightr.swift in Sources */,
+				1224C74F2618A8DE00D1122B /* CodeAttributedString.swift in Sources */,
 				15159A5621943CC3001B855A /* ViewController.swift in Sources */,
 				15D5CCE221A3E4C700AECCF5 /* MainWindowController.swift in Sources */,
 				15159A5421943CC3001B855A /* AppDelegate.swift in Sources */,
+				1224C7542618A8DE00D1122B /* Shims.swift in Sources */,
 				15159A6621943CE0001B855A /* ConfigParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,10 +485,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = UncrustifyConfig/UncrustifyConfig.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = CDY6GTW6K5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
@@ -464,10 +511,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = UncrustifyConfig/UncrustifyConfig.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = CDY6GTW6K5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
@@ -488,10 +535,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CodeFormatter/CodeFormatter.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = CDY6GTW6K5;
 				INFOPLIST_FILE = CodeFormatter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -510,10 +557,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = CodeFormatter/CodeFormatter.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = CDY6GTW6K5;
 				INFOPLIST_FILE = CodeFormatter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
