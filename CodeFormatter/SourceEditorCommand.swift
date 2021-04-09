@@ -16,8 +16,8 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
     func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void ) -> Void {
         let userDefault =  UserDefaults.init(suiteName: "club.xporter.codeformatter")
         let config = userDefault?.value(forKey: "config") as? Dictionary<String, String>
-        if let outputString = formatter.codeFormat(code: invocation.buffer.completeBuffer, configContent:config),
-            invocation.buffer.contentUTI == "public.objective-c-source" {
+        if let outputString = formatter.codeFormat(code: invocation.buffer.completeBuffer, configContent:config)
+            {
             invocation.buffer.lines.removeAllObjects()
             
             let lines = outputString.components(separatedBy: "\n")
