@@ -275,7 +275,7 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
             for each in defaultConfig {
                 let res = each.configList.filter { (model) -> Bool in
                     return (model.name?.contains(sender.stringValue) ?? false) ||
-                        (model.callName?.contains(sender.stringValue) ?? false)
+                    (model.callName?.contains(sender.stringValue) ?? false) || (model.descriptionHTML?.contains(sender.stringValue) ?? false)
                 }
                 if res.count == 0 {
                     continue
