@@ -108,8 +108,8 @@ class ConfigParser {
             if each.hasPrefix("[") && each.hasSuffix("]"){
                 configDict["name"] = each
             } else if let range = each.range(of: "=") {
-                let key = String(each[..<range.lowerBound])
-                let value = String(each[range.upperBound..<String.Index.init(encodedOffset: each.count)])
+                let key = String(each.prefix(upTo: range.lowerBound))
+                let value = String(each.suffix(from: range.upperBound))
                 configDict[key] = value
             }
         }
