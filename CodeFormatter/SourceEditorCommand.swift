@@ -20,7 +20,10 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
             {
             invocation.buffer.lines.removeAllObjects()
             
-            let lines = outputString.components(separatedBy: "\n")
+            var lines = outputString.components(separatedBy: "\n")
+            if let lastLine = lines.last,lastLine.isEmpty {
+                lines.removeLast()
+            }
             invocation.buffer.lines.addObjects(from: lines)
             
             // Crashes Xcode when replacing `completeBuffer`
