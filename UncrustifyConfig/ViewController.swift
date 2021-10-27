@@ -10,7 +10,7 @@ import Cocoa
 
 
 class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSource,NSSearchFieldDelegate {
-
+    
     @IBOutlet weak var configName: NSTextField!
     @IBOutlet weak var configDesc: NSTextField!
     @IBOutlet weak var optionsSegment: NSSegmentedControl!
@@ -22,14 +22,17 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
     @IBOutlet var formatCodeView: NSTextView!
     
     private var defaultConfig: [ConfigCategoryModel] = Array()
+    private var showConfigList: [ConfigCategoryModel] = Array()
     private var filterConfig: [ConfigCategoryModel] = Array()
     private var userConfig: [String:String] = Dictionary()
     private var selectedConfigItem: ConfigModel?
     
     private let codeFormatter = CodeFormatter()
     
+    @IBOutlet weak var segmentedController: NSSegmentedControl!
     @IBOutlet weak var configDetailView: NSView!
-    private var isSearch = false
+    @IBOutlet weak var searchField: NSSearchField!
+    
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,16 +47,19 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
         }
         
         inputValue.delegate = self
+        segmentedController.selectedSegment = 0
+        showConfigList = defaultConfig
         configListView.reloadData()
         
+        
     }
-  
+    
     deinit {
         removeNotification()
     }
     override func keyUp(with event: NSEvent) {
         super.keyUp(with: event)
-       
+        
     }
     //MARK: - notification
     func addNotification()  {
@@ -63,7 +69,7 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
         NotificationCenter.default.addObserver(self, selector: #selector(saveConfig(notification:)), name: .saveConfig, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(clearAll(notification:)), name: .clearAll, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(deleteUserConfig(notification:)), name: .deleteConfig, object: nil)
-       
+        
     }
     
     func removeNotification() {
@@ -117,13 +123,8 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
     }
     
     @objc private func deleteUserConfig(notification:Notification) {
-        if configListView.acceptsFirstResponder,
-            let selectedConfigItem = self.selectedConfigItem,
-            let callName = selectedConfigItem.callName {
-            userConfig.removeValue(forKey: callName)
-            configListView.reloadItem(selectedConfigItem)
-            self.selectedConfigItem?.value = ConfigParser.share.parserConfigValue(configModel: selectedConfigItem, inputValue: selectedConfigItem.valueDefault)
-            updateSelectedConfig()
+        if configListView.acceptsFirstResponder {
+            removeValueForSelectedConfig()
         }
     }
     private func renderFormatCodeView(formatterContent: String?) {
@@ -140,12 +141,10 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
     }
     
     private  func codeHighlightr(codeContent: String) -> NSAttributedString? {
-//        return NSAttributedString(string: codeContent)
         guard let highlightr = Highlightr() else {
             return nil
             
         }
-//        highlightr?.setTheme(to: "xcode")
         return highlightr.highlight(codeContent, as: nil, fastRender: true)
     }
     
@@ -165,16 +164,21 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
     private func resetWindowTitle() {
         NSApplication.shared.mainWindow?.title = "Uncrustify"
     }
-    @IBAction func configTypeChanged(_ sender: NSSegmentedControl) {
     
-        
+    @IBAction func configTypeChanged(_ sender: NSSegmentedControl) {
+        reloadConfig(onlyUserConfig: sender.selectedSegment == 1)
     }
     
- //MARK: - value changed
+    //MARK: - value changed
     @IBAction func segmentValueChanged(_ sender: Any) {
         if let selectedConfigItem = self.selectedConfigItem {
             let newValue = String(optionsSegment.selectedSegment)
+            if selectedConfigItem.valueDefault == newValue {
+                removeValueForSelectedConfig()
+                return
+            }
             let newConfigValue = ConfigParser.share.parserConfigValue(configModel: selectedConfigItem, inputValue: newValue)
+            
             changeConfig(key: selectedConfigItem.callName , value: newConfigValue)
         }
     }
@@ -202,11 +206,32 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
             userDefault.setValue(userConfig, forKey: "config")
         }
         
+        if formatCodeView.string.count > 0 {
+            changeWindowTitle(title: "Formatting...")
+            renderFormatCodeView(formatterContent: codeFormatter.codeFormat(code: formatCodeView.string, configContent: userConfig))
+        }
+    }
+    
+    func removeValueForSelectedConfig() {
+        guard let selectedConfigItem = self.selectedConfigItem else {
+            return
+        }
+        if let callName = selectedConfigItem.callName {
+            userConfig.removeValue(forKey: callName)
+            configListView.reloadItem(selectedConfigItem)
+            self.selectedConfigItem?.value = ConfigParser.share.parserConfigValue(configModel: selectedConfigItem, inputValue: selectedConfigItem.valueDefault)
+            updateSelectedConfig()
+            
+            if let userDefault =  UserDefaults.init(suiteName: "club.xporter.codeformatter") {
+                userDefault.setValue(userConfig, forKey: "config")
+            }
+        }
         
         if formatCodeView.string.count > 0 {
             changeWindowTitle(title: "Formatting...")
             renderFormatCodeView(formatterContent: codeFormatter.codeFormat(code: formatCodeView.string, configContent: userConfig))
         }
+        
     }
     
     //MARK: - NSOutlineView
@@ -214,18 +239,18 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
         if let item = item as? ConfigCategoryModel {
             return item.configList.count
         }
-        return isSearch ? filterConfig.count : defaultConfig.count
+        return showConfigList.count
     }
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
         return item is ConfigCategoryModel
     }
     
-
+    
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
         if let item = item as? ConfigCategoryModel {
             return item.configList[index]
         }
-        return isSearch ? filterConfig[index] : defaultConfig[index]
+        return  showConfigList[index]
     }
     
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
@@ -247,14 +272,14 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
         return cell
     }
     
-
+    
     func outlineView(_ outlineView: NSOutlineView, shouldSelectItem item: Any) -> Bool {
         if let config = item as? ConfigModel {
             selectedConfigItem = config
             updateSelectedConfig()
             configDetailView.isHidden = false
         } else if item is ConfigCategoryModel {
-
+            
             if outlineView.isItemExpanded(item) {
                 outlineView.animator().collapseItem(item)
             } else {
@@ -266,16 +291,39 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
         return item is ConfigModel
     }
     
-
+    
     //MARK: - search
     @IBAction func searchFieldAction(_ sender: NSSearchField) {
-        if sender.stringValue.count > 0 {
-            isSearch = true
-            filterConfig.removeAll()
+        reloadConfig(keyword: sender.stringValue, onlyUserConfig: segmentedController.selectedSegment == 1)
+    }
+    
+    func searchFieldDidEndSearching(_ sender: NSSearchField) {
+        reloadConfig(onlyUserConfig: segmentedController.selectedSegment == 1)
+    }
+    
+    func reloadConfig(keyword: String? = nil,onlyUserConfig: Bool = false) {
+        if !onlyUserConfig && keyword == nil {
+            showConfigList = defaultConfig
+        } else {
+            showConfigList.removeAll()
             for each in defaultConfig {
                 let res = each.configList.filter { (model) -> Bool in
-                    return (model.name?.contains(sender.stringValue) ?? false) ||
-                    (model.callName?.contains(sender.stringValue) ?? false) || (model.descriptionHTML?.contains(sender.stringValue) ?? false)
+                    if onlyUserConfig {
+                        if let callName =  model.callName {
+                            if (!userConfig.keys.contains(callName)) {
+                                return false
+                            }
+                        }
+                    }
+                    
+                    if let keyword = keyword, keyword.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count > 0 {
+                        let isContainsKeyword = (model.name?.contains(keyword) ?? false) ||
+                        (model.callName?.contains(keyword) ?? false) || (model.descriptionHTML?.contains(keyword) ?? false)
+                        if !isContainsKeyword {
+                            return false
+                        }
+                    }
+                    return true
                 }
                 if res.count == 0 {
                     continue
@@ -283,17 +331,13 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
                 let model = ConfigCategoryModel()
                 model.categoryName = each.categoryName
                 model.configList = res
-                filterConfig.append(model)
+                showConfigList.append(model)
             }
-            configListView.reloadData()
-            configListView.expandItem(nil, expandChildren: true)
         }
-    }
-
-    
-    func searchFieldDidEndSearching(_ sender: NSSearchField) {
-        isSearch = false
+        
         configListView.reloadData()
+        configListView.expandItem(nil, expandChildren: true)
+        
     }
     //MARK: - update selected config
     func updateSelectedConfig() {
@@ -301,7 +345,7 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
             return
         }
         if let configname = config.name,
-            let callname = config.callName {
+           let callname = config.callName {
             configName.stringValue = configname + " (" + callname + ")"
         }
         let HTMLString = config.descriptionHTML ?? ""
@@ -320,12 +364,12 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
             }
             
             if let key = config.callName,
-                let value = userConfig[key],
-                let index = config.options?.firstIndex(of: value) {
+               let value = userConfig[key],
+               let index = config.options?.firstIndex(of: value) {
                 optionsSegment.selectedSegment = index
                 
             } else if let valueDafault = config.valueDefault,
-                let index = Int(valueDafault) {
+                      let index = Int(valueDafault) {
                 optionsSegment.selectedSegment = index
             }
             inputValue.isHidden = true
@@ -339,7 +383,7 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
             optionsSegment.isHidden = true
             optionsSegment.segmentCount = 0
             if let key = config.callName,
-                let value = userConfig[key] {
+               let value = userConfig[key] {
                 inputValue.stringValue = value
             } else if let value = config.valueDefault {
                 inputValue.stringValue = value
@@ -350,7 +394,7 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
     func transformHTMLToAttributedString(html: String?) -> NSAttributedString? {
         let HTMLString = html ?? ""
         if let HTMLData = HTMLString.data(using: .utf8),
-            let attributedString =  NSMutableAttributedString.init(html: HTMLData, documentAttributes: nil) {
+           let attributedString =  NSMutableAttributedString.init(html: HTMLData, documentAttributes: nil) {
             attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.systemFont(ofSize: 14), range: NSRange.init(location: 0, length: attributedString.length))
             let paragraphStyle = NSMutableParagraphStyle.init()
             paragraphStyle.lineSpacing = 8
@@ -363,6 +407,6 @@ class ViewController: NSViewController,NSOutlineViewDelegate,NSOutlineViewDataSo
         }
         return nil
     }
-
+    
 }
 
